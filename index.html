@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-		span {
-			left: 150px; display: inline-block; position: absolute;
-		}
-		div {
-			left: 100px; position: relative;
-		}
-	</style>
-	<title>My site</title>
+	<link rel="stylesheet" type="text/css" href="common.css">
+	<link id="pagestyle" rel="stylesheet" type="text/css" href="dark.css">
+	<title>My Course Links</title>
 </head>
 <body>
 	<div>
+		<right>
+			<button id="stylesheet1" > Light Mode </button>
+	    	<button id="stylesheet2" > Dark Mode </button>
+	    </right>
+    	
 		<h1>Course Links:</h1>
 		<a href="http://www.cs.toronto.edu/~arnold/409/19f/index.shtml" target="_blank">CSC409 - Arnold</a>
 		<span>http://www.cs.toronto.edu/~arnold/409/19f/index.shtml</span>
@@ -22,4 +21,11 @@
 	</div>
 	
 </body>
+<script type="text/javascript">
+	function swapStyleSheet(sheet) {
+	    document.getElementById("pagestyle").setAttribute("href", sheet);
+	}
+	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
+	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
+</script>
 </html>
