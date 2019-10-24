@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		span {
+			left: 150px; display: inline-block; position: absolute;
+		}
+		div {
+			left: 100px; position: relative;
+		}
+	</style>
 	<title>My site</title>
 </head>
 <body>
-
-	<h1>Courses:</h1>
-	<a href="http://www.cs.toronto.edu/~arnold/409/19f/index.shtml">CSC409 - Arnold</a>
-	<a href="http://www.math.toronto.edu/ilia/Teaching/MAT406.2019/index.html">MAT406 - Ilia</a>
-
-
+	<div>
+		<h1>Course Links:</h1>
+		<a href="http://www.cs.toronto.edu/~arnold/409/19f/index.shtml" target="_blank">CSC409 - Arnold</a>
+		<span>http://www.cs.toronto.edu/~arnold/409/19f/index.shtml</span>
+		<br><br>
+		<a href="http://www.math.toronto.edu/ilia/Teaching/MAT406.2019/index.html" target="_blank">MAT406 - Ilia</a>
+		<span>http://www.math.toronto.edu/ilia/Teaching/MAT406.2019/index.html</span>
+	</div>
+	
 </body>
 </html>
