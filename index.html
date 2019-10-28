@@ -19,6 +19,9 @@
 		<br><br>
 		<a href="http://www.math.toronto.edu/ilia/Teaching/MAT406.2019/index.html" target="_blank">MAT406 - Ilia</a>
 		<span>http://www.math.toronto.edu/ilia/Teaching/MAT406.2019/index.html</span>
+		<br><br>
+		<button id="studentLinkButton" type="button">Student page</button>
+		<span>https://cslinux.utm.utoronto.ca/~<input id="studentLink" type="text" value="atzorija" /></span>
 	</div>
 	
 </body>
@@ -26,7 +29,13 @@
 	function swapStyleSheet(sheet) {
 	    document.getElementById("pagestyle").setAttribute("href", sheet);
 	}
+	function openStudentUrl() {
+		let url = "https://cslinux.utm.utoronto.ca/~" + 
+		document.getElementById("studentLink").value;
+		window.open(url,'_blank');
+	}
 	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
 	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
+	document.getElementById("studentLinkButton").onclick = openStudentUrl;
 </script>
 </html>
