@@ -25,6 +25,8 @@
 		<br><br>
 		<button id="studentLinkButton" type="button">Student page</button>
 		<span>https://cslinux.utm.utoronto.ca/~<input id="studentLink" type="text" value="atzorija" /></span>
+		<br><br><br><br><br><br><br><br>
+		<h2>Time: <time id="timelabel"></time>%</h2>
 	</div>
 	
 </body>
@@ -37,8 +39,19 @@
 		document.getElementById("studentLink").value;
 		window.open(url,'_blank');
 	}
+	function getSecondsToday() {
+	  let d = new Date();
+	  return d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+	}
+	function setTime() {
+		let dayLength = 3600*24;
+		document.getElementById("timelabel").innerHTML = 
+			Math.floor(100*getSecondsToday()/dayLength);
+	}
 	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
 	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
 	document.getElementById("studentLinkButton").onclick = openStudentUrl;
+	setTime();
+	window.setInterval(setTime, 60000);
 </script>
 </html>
