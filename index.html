@@ -27,6 +27,7 @@
 		<span>https://cslinux.utm.utoronto.ca/~<input id="studentLink" type="text" value="atzorija" /></span>
 		<br><br><br><br><br><br><br><br>
 		<h2>Time: <time id="timelabel"></time>%</h2>
+		<h2>Date: <date id="daylabel"></date>%, <date id="monthlabel"></date>%, <date id="yearlabel"></date>%</h2>
 	</div>
 	
 </body>
@@ -43,15 +44,39 @@
 	  let d = new Date();
 	  return d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
 	}
+	function getDaysThisMonth() {
+	  let d = new Date();
+	  return d.getDate();
+	}
+	function getMonthsThisYear() {
+	  let d = new Date();
+	  return d.getMonth() + 1;
+	}
+	function getYear() {
+	  let d = new Date();
+	  return d.getYear() - 69;
+	}
 	function setTime() {
 		let dayLength = 3600*24;
 		document.getElementById("timelabel").innerHTML = 
 			Math.floor(100*getSecondsToday()/dayLength);
 	}
+	function setDate() {
+		let daysInMonth = 31;
+		let monthsInYear = 12;
+		let numberOfYears = 69;
+		document.getElementById("daylabel").innerHTML = 
+			Math.floor(100*getDaysThisMonth()/daysInMonth);
+		document.getElementById("monthlabel").innerHTML = 
+			Math.floor(100*getMonthsThisYear()/monthsInYear);
+		document.getElementById("yearlabel").innerHTML = 
+			Math.floor(100*getYear()/numberOfYears);
+	}
 	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
 	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
 	document.getElementById("studentLinkButton").onclick = openStudentUrl;
 	setTime();
+	setDate();
 	window.setInterval(setTime, 60000);
 </script>
 </html>
