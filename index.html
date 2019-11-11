@@ -28,6 +28,7 @@
 		<br><br><br><br><br><br><br><br>
 		<h2>Time: <time id="timelabel"></time>%</h2>
 		<h2>Date: <date id="daylabel"></date>%, <date id="monthlabel"></date>%, <date id="yearlabel"></date>%</h2>
+		<h2>Overall Time: <time id="overalltimelabel"></time>%</h2>
 	</div>
 	
 </body>
@@ -56,10 +57,14 @@
 	  let d = new Date();
 	  return d.getYear() - 69;
 	}
+	function getUnixTime() {
+		return Math.round((new Date()).getTime() / 1000);
+	}
+	let unixDeath = 2147483648;
 	function setTime() {
 		let dayLength = 3600*24;
 		document.getElementById("timelabel").innerHTML = 
-			Math.floor(100*getSecondsToday()/dayLength);
+			Math.floor(10000*getSecondsToday()/dayLength)/100;
 	}
 	function setDate() {
 		let daysInMonth = 31;
@@ -72,11 +77,19 @@
 		document.getElementById("yearlabel").innerHTML = 
 			Math.floor(100*getYear()/numberOfYears);
 	}
+	function setOverallTime() {
+		let overallTime = 100*getUnixTime()/unixDeath;
+		document.getElementById("overalltimelabel").innerHTML = 
+			// Math.floor(10000*getUnixTime()/unixDeath)/100;
+			(overallTime - overallTime % 10**-7).toFixed(13);
+	}
 	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
 	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
 	document.getElementById("studentLinkButton").onclick = openStudentUrl;
 	setTime();
 	setDate();
-	window.setInterval(setTime, 60000);
+	setOverallTime();
+	window.setInterval(setTime, 600);
+	window.setInterval(setOverallTime, 2000);
 </script>
 </html>
