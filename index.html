@@ -43,9 +43,9 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-	// $.get("https://cslinux.utm.utoronto.ca/~atzorija/api/getlinks.php", function(data){
+	$.get("https://cslinux.utm.utoronto.ca/~atzorija/api/getlinks.php", function(data){
 		// console.log(data);
-		let data = "google.ca\tgoogle\nutoronto.ca\tutoronto";
+		// let data = "google.ca\tgoogle\nutoronto.ca\tutoronto";
 		const links = data.split("\n");
 		links.forEach(linkData => {
 			[link, name] = linkData.split("\t");
@@ -53,7 +53,7 @@
 				<span>${link}</span>
 				<br><br>`);
 		});
-	// });
+	});
 	function addLink(){
 		const linkUrl = $("#newLink").val();
 		const linkName = $("#newLinkName").val();
