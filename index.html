@@ -49,9 +49,11 @@
 		const links = data.split("\n");
 		links.forEach(linkData => {
 			[link, name] = linkData.split("\t");
-			$("#customlinks").append(`<a href="${link}" target="_blank">${name}</a>
+			if(link){
+				$("#customlinks").append(`<a href="${link}" target="_blank">${name}</a>
 				<span>${link}</span>
 				<br><br>`);
+			}
 		});
 	});
 	function addLink(){
