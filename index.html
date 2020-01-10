@@ -25,13 +25,29 @@
 		<br><br>
 		<button id="studentLinkButton" type="button">Student page</button>
 		<span>https://cslinux.utm.utoronto.ca/~<input id="studentLink" type="text" value="atzorija" /></span>
-		<br><br><br><br><br><br><br><br>
+		<br><br><br><br>
+		----------------
+		<customlinks id="customlinks">
+			
+		</customlinks>
+		<form>
+		  Link: <input type="text" size="50" name="firstname" value="https://wwww.google.ca">
+		  Name: <input type="text" name="lastname" value="google">
+		  <input id="linkAdd" type="submit" value="Submit">
+		</form>
+		<br><br><br><br>
 		<h2>Time: <time id="timelabel"></time>%</h2>
 		<h2>Date: <date id="daylabel"></date>%, <date id="monthlabel"></date>%, <date id="yearlabel"></date>%</h2>
 		<h2>Overall Time: <time id="overalltimelabel"></time>%</h2>
 	</div>
 	
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$.get("https://cslinux.utm.utoronto.ca/~atzorija/api/getlinks.php", function(data){
+		console.log(data);
+	});
+</script>
 <script type="text/javascript">
 	function swapStyleSheet(sheet) {
 	    document.getElementById("pagestyle").setAttribute("href", sheet);
