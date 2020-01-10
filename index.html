@@ -27,14 +27,13 @@
 		<span>https://cslinux.utm.utoronto.ca/~<input id="studentLink" type="text" value="atzorija" /></span>
 		<br><br><br><br>
 		----------------
-		<customlinks id="customlinks">
-			
-		</customlinks>
-		<form>
-		  Link: <input type="text" size="50" name="firstname" value="https://wwww.google.ca">
-		  Name: <input type="text" name="lastname" value="google">
-		  <input id="linkAdd" type="submit" value="Submit">
-		</form>
+		<br><br>
+		<customlinks id="customlinks"></customlinks>
+		<formz>
+		  Link: <input id="newLink" type="text" size="50" name="firstname" value="https://wwww.google.ca">
+		  Name: <input id="newLinkName" type="text" name="lastname" value="google">
+		  <button id="linkAdd" onclick="addLink()">Add</button>
+		</formz>
 		<br><br><br><br>
 		<h2>Time: <time id="timelabel"></time>%</h2>
 		<h2>Date: <date id="daylabel"></date>%, <date id="monthlabel"></date>%, <date id="yearlabel"></date>%</h2>
@@ -44,9 +43,26 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-	$.get("https://cslinux.utm.utoronto.ca/~atzorija/api/getlinks.php", function(data){
-		console.log(data);
-	});
+	// $.get("https://cslinux.utm.utoronto.ca/~atzorija/api/getlinks.php", function(data){
+		// console.log(data);
+		let data = "google.ca\tgoogle\nutoronto.ca\tutoronto";
+		const links = data.split("\n");
+		links.forEach(linkData => {
+			[link, name] = linkData.split("\t");
+			$("#customlinks").append(`<a href="${link}" target="_blank">${name}</a>
+				<span>${link}</span>
+				<br><br>`);
+		});
+	// });
+	function addLink(){
+		const linkUrl = $("#newLink").val();
+		const linkName = $("#newLinkName").val();
+		$.get(`https://cslinux.utm.utoronto.ca/~atzorija/api/addLink.php?link=${linkUrl}&name=${linkName}`, function(data){
+			$("#customlinks").append(`<a href="${linkUrl}" target="_blank">${name}</a>
+				<span>${linkName}</span>
+				<br><br>`);
+		});
+	}
 </script>
 <script type="text/javascript">
 	function swapStyleSheet(sheet) {
