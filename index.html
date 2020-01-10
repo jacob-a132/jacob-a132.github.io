@@ -58,8 +58,9 @@
 		const linkUrl = $("#newLink").val();
 		const linkName = $("#newLinkName").val();
 		$.get(`https://cslinux.utm.utoronto.ca/~atzorija/api/addlink.php?link=${linkUrl}&name=${linkName}`, function(data){
-			$("#customlinks").append(`<a href="${linkUrl}" target="_blank">${name}</a>
-				<span>${linkName}</span>
+			console.log(data);
+			$("#customlinks").append(`<a href="${linkUrl}" target="_blank">${linkName}</a>
+				<span>${linkUrl}</span>
 				<br><br>`);
 		});
 	}
