@@ -116,7 +116,7 @@
 		let overallTime = 100*getUnixTime()/unixDeath;
 		document.getElementById("overalltimelabel").innerHTML = 
 			// Math.floor(10000*getUnixTime()/unixDeath)/100;
-			(overallTime - overallTime % 10**-7).toFixed(13);
+			(overallTime - overallTime % 10**-7).toFixed(7);
 	}
 	stylesheet1.onclick = function () { swapStyleSheet("light.css") };
 	stylesheet2.onclick = function () { swapStyleSheet("dark.css"); };
