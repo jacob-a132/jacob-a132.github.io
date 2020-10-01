@@ -4,8 +4,8 @@ var score_lbl = document.getElementById('score');
 // table generation -- dun dun duuunnnn
 var tbl = document.getElementById('table');
 var tbdy = document.createElement('tbody');
-var width = 20;
-var height = 15;
+var width = 24;
+var height = 14;
 for (var i = 0; i < height; i++) {
     var tr = document.createElement('tr');
     for (var j = 0; j < width; j++) {
@@ -35,7 +35,9 @@ var apple = apple_start;
 document.getElementById(apple).src = 'santi.png';
 var grow = false;
 var move_queue = ['E'];
-var gameover = false;
+var gameover = true;
+gameover = true;
+msg.innerHTML = 'press [space] or [enter] to start';
 var speed = 1000/document.getElementById('speed').value;
 var score = 0;
 var border_img = 'ali.png';
@@ -44,7 +46,7 @@ var head_img1 = 'arsala_right.png';
 var head_img2 = 'arsala_left.png';
 var apple_img = 'santi.png';
 
-// Snake object
+// Snek object
 function Snek() {
   class Snek {
     constructor() {
@@ -214,4 +216,4 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-var intervalId = window.setInterval(move, speed);
+//var intervalId = window.setInterval(move, speed);
