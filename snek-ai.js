@@ -398,7 +398,7 @@ function getNextMove(){
 }
 
 function move(){
-    if (window.location.pathname == '/snek-ai'){
+    if (window.location.hash.endsWith('/snek-ai')){
         var newDir = getNextMove();
         s.add(newDir);
         if(grow == false)

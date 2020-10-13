@@ -113,7 +113,7 @@ function Snek() {
 var s = Snek();
 
 function move(){
-    if (window.location.pathname == '/snek'){
+    if (window.location.hash.endsWith('/snek')){
         var new_dir = s.dir;
         if(move_queue.length > 0)
             new_dir = move_queue.shift();
