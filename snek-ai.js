@@ -4,8 +4,8 @@ var score_lbl = document.getElementById('score');
 // table generation -- dun dun duuunnnn
 var tbl = document.getElementById('table');
 var tbdy = document.createElement('tbody');
-var width = 30;
-var height = 15;
+var width = 24;
+var height = 14;
 for (var i = 0; i < height; i++) {
     var tr = document.createElement('tr');
     for (var j = 0; j < width; j++) {
@@ -28,7 +28,7 @@ tbl.appendChild(tbdy);
 document.getElementById('resetButton').onclick = reset;
 
 // define some variables
-var apple_start = '28,1';
+var apple_start = '15,9';
 var apple = apple_start; 
 document.getElementById(apple).src = 'redsquare.png';
 var grow = false;
@@ -386,10 +386,10 @@ function getNextMove(){
     var possibleDirections = getTargetDirections(head, target);
     addOtherDirections(possibleDirections);
     removeDirectionsThatKill(possibleDirections, head);
-    unfavorEdgeSpaces(possibleDirections, head, target);
     if (!targetDirections.includes(possibleDirections[0])){
         favorPathingToApple(possibleDirections, head, target);
     }
+    unfavorEdgeSpaces(possibleDirections, head, target);
     favorNotGettingBoxedIn(possibleDirections, head);
     // dont make boxes at all - if possible
 

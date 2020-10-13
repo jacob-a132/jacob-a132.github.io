@@ -1,6 +1,12 @@
 var msg = document.getElementById('msg');
 var score_lbl = document.getElementById('score');
 
+var border_img = 'blacksquare.png';
+var head_img = 'greensquare.png';
+var head_img1 = 'greensquare.png';
+var head_img2 = 'greensquare.png';
+var apple_img = 'redsquare.png';
+
 // table generation -- dun dun duuunnnn
 var tbl = document.getElementById('table');
 var tbdy = document.createElement('tbody');
@@ -13,7 +19,7 @@ for (var i = 0; i < height; i++) {
             var img = new Image(32,32);
             img.setAttribute("id", j+","+i);
             if(i == 0 || j == 0 || i == height-1 || j == width-1){
-                img.src = 'ali.png';
+                img.src = border_img;
             }
             else{
                 img.src = 'blanksquare.png';
@@ -32,7 +38,7 @@ document.getElementById('facesButton').onclick = set_faces;
 // define some variables
 var apple_start = '15,9';
 var apple = apple_start; 
-document.getElementById(apple).src = 'santi.png';
+document.getElementById(apple).src = apple_img;
 var grow = false;
 var move_queue = ['E'];
 var gameover = true;
@@ -40,11 +46,6 @@ gameover = true;
 msg.innerHTML = 'press [space] or [enter] to start';
 var speed = 1000/document.getElementById('speed').value;
 var score = 0;
-var border_img = 'ali.png';
-var head_img = 'arsala_right.png';
-var head_img1 = 'arsala_right.png';
-var head_img2 = 'arsala_left.png';
-var apple_img = 'santi.png';
 
 // Snek object
 function Snek() {
