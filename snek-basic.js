@@ -182,7 +182,9 @@ function reset(){
     intervalId = window.setInterval(move, speed);
 }
 
-document.addEventListener('keydown', function(event) {
+document.getElementById('Snek').focus();
+document.getElementById('Snek')
+.addEventListener('keydown', function(event) {
 
     if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
       event.preventDefault();
