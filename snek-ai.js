@@ -9,6 +9,150 @@ function getRGB(num){
     return '#00' + num.toString(16) + '00';
 }
 
+class MinHeap {
+    constructor(){
+        this.heap = [];
+    }
+
+    getScoreDefault(val){
+        return val;
+    }
+
+    bubbleUp(idx, getScore){
+        if (idx == 0) return;
+        const val = this.heap[idx];
+        const parentIdx = Math.floor((idx-1)/2);
+        const parentVal = this.heap[parentIdx];
+        if (getScore(val) < getScore(parentVal)) {
+            this.heap[parentIdx] = val;
+            this.heap[idx] = parentVal
+            this.bubbleUp(parentIdx, getScore);
+        }
+    }
+
+    bubbleDown(idx, getScore){
+        const val = this.heap[idx];
+        const child1Idx = idx*2 + 1;
+        const child2Idx = idx*2 + 2;
+        if (this.heap.length < child1Idx + 1) return;
+        let smallerChildIndex;
+        if (this.heap.length == child1Idx + 1) {
+            smallerChildIndex = child1Idx;
+        } else{
+            smallerChildIndex = getScore(this.heap[child1Idx]) < getScore(this.heap[child2Idx]) ? child1Idx : child2Idx;
+        }
+        if (getScore(val) > getScore(this.heap[smallerChildIndex])){
+            this.heap[idx] = this.heap[smallerChildIndex];
+            this.heap[smallerChildIndex] = val;
+            this.bubbleDown(smallerChildIndex, getScore);
+        }
+    }
+
+    push(val, getScore = this.getScoreDefault){
+        this.heap.push(val);
+        this.bubbleUp(this.heap.length-1, getScore);
+    }
+
+    pop(getScore = this.getScoreDefault){
+        if (this.heap.length == 0) return null;
+        if (this.heap.length == 1) return this.heap.pop();
+        const val = this.heap[0];
+        this.heap[0] = this.heap.pop();
+        this.bubbleDown(0, getScore);
+        return val;
+    }
+
+    replaceValue(matchFunc, newVal, getScore = this.getScoreDefault){
+        const idx = this.heap.findIndex(matchFunc);
+        if (idx == -1){
+            return this.push(newVal, getScore);
+        }
+        this.heap[idx] = newVal;
+        this.bubbleUp(idx, getScore);
+        this.bubbleDown(idx, getScore);
+    }
+
+    contains(matchFunc){
+        const idx = this.heap.findIndex(matchFunc);
+        return idx > -1;
+    }
+
+    isEmpty(){
+        return this.heap.length == 0;
+    }
+}
+
+function reconstruct_path(cameFrom, current){
+    total_path = [current];
+    while (current in cameFrom){
+        current = cameFrom[current];
+        total_path.push(current);
+    }
+    return total_path.slice(0,-1);
+}
+
+function A_Star(start, goal, h, wd){
+    openSet = new MinHeap();
+    openSet.push(start);
+
+    cameFrom = {};
+
+    gScore = {};
+    gScore[start] = 0;
+
+    fScore = {};
+    fScore[start] = h(start);
+
+    while (!openSet.isEmpty()){
+        let current = openSet.pop((id) => fScore[id] ?? 100000);
+        if (current == goal){
+            const path = reconstruct_path(cameFrom, current);
+            if (path.some(id => fScore[id] > 900)) return null;
+            return path;
+        }
+
+        const neighbours = getAStartNeighbours(current);
+        for (const neighbour of neighbours){
+            tentative_gScore = gScore[current] + wd(neighbour)
+            if (!(neighbour in gScore) || tentative_gScore < gScore[neighbour]){
+                cameFrom[neighbour] = current
+                gScore[neighbour] = tentative_gScore
+                fScore[neighbour] = tentative_gScore + h(neighbour)
+                openSet.replaceValue((id) => id == neighbour, neighbour, (id) => fScore[id] ?? 100000)
+            }
+        }
+    }
+
+    return null
+}
+
+function getAStartNeighbours(id){
+    let head = getHeadArray(id);
+    let directions = ['N', 'E', 'S', 'W'];
+    removeDirectionsThatKill(directions, head);
+    return directions.map(dir => getAhead(head, dir));
+}
+
+function getAhead(head, dir){
+    var ahead = '';
+    if(dir == 'E')
+        ahead = (parseInt(head[0])+1)+','+head[1];
+    if(dir == 'W')
+        ahead = (parseInt(head[0])-1)+','+head[1];
+    if(dir == 'N')
+        ahead = head[0]+','+(parseInt(head[1])-1);
+    if(dir == 'S')
+        ahead = head[0]+','+(parseInt(head[1])+1);
+    return ahead;
+}
+
+function getDistance(start, end){
+    const s = getHeadArray(start);
+    const e = getHeadArray(end);
+
+    return Math.abs(e[0] - s[0]) + Math.abs(e[1] - s[1]);
+}
+
 // table generation -- dun dun duuunnnn
 var tbl = document.getElementById('table');
 var tbdy = document.createElement('tbody');
@@ -35,7 +179,7 @@ tbl.appendChild(tbdy);
 document.getElementById('resetButton').onclick = reset;
 
 // define some variables
-var apple_start = '15,9';
+var apple_start = '15,11';
 var apple = apple_start; 
 document.getElementById(apple).style.backgroundColor = apple_color;
 var grow = false;
@@ -54,28 +198,12 @@ function Snek() {
             this.dir = 'E';
             var start = 6;
             this.trail = [3+start+',9', 2+start+',9', 1+start+',9', start+',9'];
-            // this.trail = [];
-            // for (var i = 10; i < 15; i++) {
-            //     for (var j = 1; j < 14; j++) {
-            //         this.trail.push(''+i+','+j);
-            //     };
-            // };
             this.length = this.trail.length;
             this.setSnekColors();
         }
-        add(dir){
-            this.dir = dir;
-            var head = this.trail[0].split(',');
-            var ahead = '';
-            if(dir == 'E')
-                ahead = (parseInt(head[0])+1)+','+head[1];
-            if(dir == 'W')
-                ahead = (parseInt(head[0])-1)+','+head[1];
-            if(dir == 'N')
-                ahead = head[0]+','+(parseInt(head[1])-1);
-            if(dir == 'S')
-                ahead = head[0]+','+(parseInt(head[1])+1);
-            head = ahead.split(',');
+        add(path){
+            let ahead = path.pop();
+            let head = ahead.split(',');
 
             if(head[0] == 0 || head[1] == 0 || head[0] == width-1 || head[1] == height-1
                 || this.trail.includes(ahead)){
@@ -260,6 +388,12 @@ function getSpaceForMove(head, move){
     return spaceCount;
 }
 
+function getSpacesForPosition(newHead){
+    var newHeadArr = getHeadArray(newHead);
+    var spaceCount = bfs(newHeadArr);
+    return spaceCount;
+}
+
 function favorNotGettingBoxedIn(directions, head){
     var totalSquaresLeft = (width-2)*(height-2)-s.length;
     var pairs = [];
@@ -280,6 +414,28 @@ function favorNotGettingBoxedIn(directions, head){
     if (maxIndex != 0 && (pairs[0] < s.length + 10)) {
         directions.unshift(directions.splice(maxIndex, 1)[0]);
     }
+}
+
+function willBeBoxedIn(newHead){
+    var totalSquaresLeft = (width-2)*(height-2)-s.length;
+    var spaces = getSpacesForPosition(newHead);
+    return spaces < totalSquaresLeft/2;
+}
+
+function isNearAnEdge(position){
+    const [j, i] = getHeadArray(position);
+    return i == 1 || j == 1 || i == height-2 || j == width-2
+}
+
+function distanceToEdge(position){
+    const [j, i] = getHeadArray(position);
+    const distances = [i, j, height-i-1, width-j-1];
+    return Math.min(...distances);
+}
+
+function isAdjacentToTrail(position){
+    const neighbours = getAStartNeighbours(position);
+    return neighbours.some(neighbour => s.trail.includes(neighbour));
 }
 
 function targetIsInFront(head, target, move){
@@ -401,10 +557,37 @@ function getNextMove(){
     return move;
 }
 
+var path = [];
+
+function heuristic(start) {
+    let hVal = 10;
+    hVal += getDistance(start, apple);
+    if (willBeBoxedIn(start)) hVal += 1000;
+    const edgeScore = 6 - distanceToEdge(start);
+    hVal += edgeScore == 5 ? 10 : 0;
+    if (isAdjacentToTrail(start)) hVal -= 2;
+    return hVal;
+}
+
+function weightedDistance(start) {
+    return 1;
+    // let hVal = 10;
+    // if (willBeBoxedIn(start)) hVal += 50;
+    // const edgeScore = 6 - distanceToEdge(start);
+    // hVal += edgeScore;
+    // return hVal;
+}
+
 function move(){
     if (window.location.hash.endsWith('/snek-ai')){
-        var newDir = getNextMove();
-        s.add(newDir);
+        // if (path.length == 0)
+        path = A_Star(s.trail[0], apple, heuristic, weightedDistance);
+        if (path == null){
+            const nextDir = getNextMove();
+            const head = getHeadArray(s.trail[0]);
+            path = [getAhead(head, nextDir)];
+        }
+        s.add(path);
         if(grow == false)
             s.remove();
         else
@@ -421,6 +604,7 @@ function reset(){
     }
     s = new Snek();
     move_queue = ['E'];
+    path = [];
     grow = false;
     gameover = false;
     apple = apple_start;
