@@ -1,1 +1,1 @@
-{"Jacob":["Ann","Patty"],"Meghan":["Patty","Joey"],"Jon":["Ann","Meghan"],"Joey":["Jacob","Meghan"],"Ann":["Frank","Jacob"],"Frank":["Joey","Jon"],"Patty":["Frank","Jon"]}
+{"jacob":["joey","frank"],"meghan":["jon","patty"],"jon":["jacob","meghan"],"joey":["jon","ann"],"ann":["joey","meghan"],"frank":["jacob","patty"],"patty":["frank","ann"]}
